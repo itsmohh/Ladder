@@ -9,8 +9,8 @@ import pandas as pd
 # LADDER FILTER SETTINGS
 # ---------------------------------------------------------
 
-MIN_LADDER_AGE = 14
-MAX_LADDER_AGE = 19
+MIN_LADDER_AGE = 16
+MAX_LADDER_AGE = 21
 
 PUBLISH_SCORE = 70
 
@@ -441,7 +441,7 @@ def extract_minimum_age(text: str) -> int | None:
         for match in matches:
             age = int(match.group(1))
 
-            if 14 <= age <= 21:
+            if 16 <= age <= 21:
                 ages.append(age)
 
     if not ages:
