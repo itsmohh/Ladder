@@ -28,7 +28,7 @@ jobs:
       - name: Run job scraping pipeline
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
         run: python run_pipeline.py --cleanup
 
       - name: Upload logs on failure
