@@ -25,11 +25,34 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Verify secrets are set
+        run: |
+          if [ -z "${{ secrets.SUPABASE_URL }}" ]; then
+            echo "ERROR: SUPABASE_URL secret is not set!"
+            exit 1
+          fi
+          if [ -z "${{ secrets.SUPABASE_SECRET_KEY }}" ]; then
+            echo "ERROR: SUPABASE_SECRET_KEY secret is not set!"
+            exit 1
+          fi
+          echo "Both secrets are configured."
+
       - name: Run job scraping pipeline
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
-        run: python run_pipeline.py --cleanup
+        run: |
+          set -e
+          python -u run_pipeline.py --cleanup 2>&1 | tee pipeline.log
+          
+      - name: Show error details on failure
+        if: failure()
+        run: |
+          echo "=== Pipeline Log ==="
+          cat pipeline.log 2>/dev/null || echo "No pipeline.log found"
+          echo ""
+          echo "=== Last 50 lines of any CSV errors ==="
+          tail -50 *.log 2>/dev/null || echo "No additional logs"
 
       - name: Upload logs on failure
         if: failure()
