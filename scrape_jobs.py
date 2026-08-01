@@ -13,7 +13,7 @@ from jobspy import scrape_jobs
 
 # Each location acts as a search center.
 # The radius helps Ladder cover the surrounding area.
-# Top US metros for teen job markets.
+# Top US metros for young people job markets (ages 16-21).
 SEARCH_AREAS = [
     # Northeast
     {
@@ -204,6 +204,22 @@ SEARCHES = [
             '"student-athlete" '
             '(internship OR counselor OR coach OR summer) '
             '-manager -director'
+        ),
+    },
+    {
+        "name": "college_student_jobs",
+        "term": (
+            '("college student" OR "college students") '
+            '("part time" OR flexible OR seasonal OR summer) '
+            '-senior -manager -director -experienced'
+        ),
+    },
+    {
+        "name": "entry_level_18",
+        "term": (
+            '("18 years old" OR "must be 18" OR "minimum age 18") '
+            '("part time" OR entry OR seasonal) '
+            '-senior -manager -director -supervisor'
         ),
     },
 ]
