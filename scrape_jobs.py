@@ -162,6 +162,40 @@ SEARCH_AREAS = [
 # Searching only for "high school" causes adult jobs with
 # "high school diploma required" to appear.
 SEARCHES = [
+    # =========================================================
+    # CATEGORY 1: Pre-College & Educational Programs
+    # Highest value - explicitly designed for HS students
+    # =========================================================
+    {
+        "name": "pre_college_programs",
+        "term": (
+            '("pre-college program" OR "precollege program" '
+            'OR "pre-college summer" OR "precollege summer") '
+            '-senior -manager -director'
+        ),
+    },
+    {
+        "name": "summer_hs_programs",
+        "term": (
+            '"summer program" '
+            '("high school" OR "rising senior" OR "rising junior") '
+            '-senior -manager -director'
+        ),
+    },
+    # =========================================================
+    # CATEGORY 2: Youth Employment Programs
+    # =========================================================
+    {
+        "name": "youth_employment",
+        "term": (
+            '("summer youth employment" '
+            'OR "youth employment program" '
+            'OR "youth job program")'
+        ),
+    },
+    # =========================================================
+    # CATEGORY 3: High School Student Opportunities
+    # =========================================================
     {
         "name": "high_school_internship",
         "term": (
@@ -179,14 +213,9 @@ SEARCHES = [
             '-senior -manager -director'
         ),
     },
-    {
-        "name": "youth_employment",
-        "term": (
-            '("summer youth employment" '
-            'OR "youth employment program" '
-            'OR "youth job program")'
-        ),
-    },
+    # =========================================================
+    # CATEGORY 4: Age-Specific Entry Level
+    # =========================================================
     {
         "name": "teen_part_time",
         "term": (
@@ -198,6 +227,17 @@ SEARCHES = [
             '-senior -manager -director'
         ),
     },
+    {
+        "name": "entry_level_18",
+        "term": (
+            '("18 years old" OR "must be 18" OR "minimum age 18") '
+            '("part time" OR entry OR seasonal) '
+            '-senior -manager -director -supervisor'
+        ),
+    },
+    # =========================================================
+    # CATEGORY 5: Student Opportunities
+    # =========================================================
     {
         "name": "student_athlete",
         "term": (
@@ -212,14 +252,6 @@ SEARCHES = [
             '("college student" OR "college students") '
             '("part time" OR flexible OR seasonal OR summer) '
             '-senior -manager -director -experienced'
-        ),
-    },
-    {
-        "name": "entry_level_18",
-        "term": (
-            '("18 years old" OR "must be 18" OR "minimum age 18") '
-            '("part time" OR entry OR seasonal) '
-            '-senior -manager -director -supervisor'
         ),
     },
 ]

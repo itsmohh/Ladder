@@ -455,6 +455,17 @@ def extract_minimum_age(text: str) -> int | None:
 # ---------------------------------------------------------
 
 CATEGORY_PATTERNS = {
+    "Pre-College Programs": [
+        r"\bpre-college\b",
+        r"\bprecollege\b",
+        r"\bsummer program\b",
+        r"\bresearch program\b",
+        r"\bbridge program\b",
+        r"\buniversity program\b",
+        r"\bcollege prep\b",
+        r"\brising senior\b",
+        r"\brising junior\b",
+    ],
     "Technology": [
         r"\bsoftware\b",
         r"\bcoding\b",
@@ -746,6 +757,41 @@ def classify_job(
     # -----------------------------------------------------
     # Positive scoring
     # -----------------------------------------------------
+
+    # Pre-college and educational programs
+    if re.search(
+        r"\b(?:pre-college|precollege)\b",
+        text,
+        re.IGNORECASE,
+    ):
+        score += 50
+        positive_reasons.append(
+            "Pre-college program"
+        )
+
+    if re.search(
+        r"\bsummer program\b",
+        text,
+        re.IGNORECASE,
+    ) and re.search(
+        r"\b(?:high school|university|college|student|rising)\b",
+        text,
+        re.IGNORECASE,
+    ):
+        score += 45
+        positive_reasons.append(
+            "Summer program for students"
+        )
+
+    if re.search(
+        r"\b(?:research|bridge|enrichment) program\b",
+        text,
+        re.IGNORECASE,
+    ):
+        score += 40
+        positive_reasons.append(
+            "Educational enrichment program"
+        )
 
     if teen_targeted:
         score += 55
