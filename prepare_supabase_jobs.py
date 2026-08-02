@@ -187,6 +187,53 @@ def main() -> None:
         keep="first",
     )
 
+    # Deduplicate across sources by company + title + location.
+    # This prevents the same job from appearing twice when
+    # it's posted on both Indeed and LinkedIn.
+    before_dedup = len(output)
+    
+    output["_dedup_company"] = (
+        output["company"]
+        .fillna("")
+        .str.lower()
+        .str.strip()
+    )
+    output["_dedup_title"] = (
+        output["title"]
+        .fillna("")
+        .str.lower()
+        .str.strip()
+    )
+    output["_dedup_location"] = (
+        output["location"]
+        .fillna("")
+        .str.lower()
+        .str.strip()
+    )
+    
+    output = output.drop_duplicates(
+        subset=[
+            "_dedup_company",
+            "_dedup_title", 
+            "_dedup_location",
+        ],
+        keep="first",
+    )
+    
+    output = output.drop(
+        columns=[
+            "_dedup_company",
+            "_dedup_title",
+            "_dedup_location",
+        ]
+    )
+    
+    duplicates_removed = before_dedup - len(output)
+    if duplicates_removed > 0:
+        print(
+            f"Removed {duplicates_removed} cross-source duplicates."
+        )
+
     OUTPUT_FILE.parent.mkdir(
         parents=True,
         exist_ok=True,
