@@ -331,7 +331,7 @@ def run_single_search(
     print("----------------------------------------")
 
     jobs = scrape_jobs(
-        site_name=["indeed"],
+        site_name=["indeed", "linkedin"],
         search_term=search_term,
         location=location,
         distance=distance,
